@@ -1,0 +1,40 @@
+name: Build Tweak
+
+on:
+  push:
+    branches:
+      - main  # 或者 master
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Install Theos dependencies
+      run: |
+        brew install ldid dpkg
+
+    - name: Clone Theos
+      run: |
+        git clone --recursive https://github.com/theos/theos.git $HOME/theos
+        echo "THEOS=$HOME/theos" >> $GITHUB_ENV
+
+    - name: Download SDK (iOS 14.0)
+      run: |
+        mkdir -p $THEOS/sdks
+        curl -L -o $THEOS/sdks/iPhoneOS14.0.sdk.tar.xz https://github.com/theos/sdks/releases/download/14.0/iPhoneOS14.0.sdk.tar.xz
+        tar -xf $THEOS/sdks/iPhoneOS14.0.sdk.tar.xz -C $THEOS/sdks
+
+    - name: Build Tweak
+      run: |
+        make clean package
+
+    - name: Upload .deb artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: tweak-deb
+        path: packages/*.deb
