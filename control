@@ -1,0 +1,8 @@
+Package: com.xiaoduotou.yjb
+Name: yangjibao
+Version: 0.0.1
+Architecture: iphoneos-arm
+Description: yangjibao for com.xiaoduotou.yjb
+Maintainer: nice
+Author: nice
+Section: Tweaks
