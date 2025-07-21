@@ -1,11 +1,11 @@
 TARGET := iphone:clang:latest:7.0
-INSTALL_TARGET_PROCESSES = com.xiaoduotou.yjb
+INSTALL_TARGET_PROCESSES = com.mubu.iosapp
 
 include $(THEOS)/makefiles/common.mk
 
-TWEAK_NAME = yangjibao
+TWEAK_NAME = mubu
 
-yangjibao_FILES = Tweak.x
-yangjibao_CFLAGS = -fobjc-arc
+mubu_FILES = Tweak.x
+mubu_CFLAGS = -fobjc-arc
 
 include $(THEOS_MAKE_PATH)/tweak.mk
