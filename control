@@ -1,8 +1,8 @@
-Package: com.xiaoduotou.yjb
-Name: yangjibao
+Package: com.strava.stravaride
+Name: strava
 Version: 0.0.1
 Architecture: iphoneos-arm
-Description: yangjibao for com.xiaoduotou.yjb
+Description: strava for com.strava.stravaride
 Maintainer: nice
 Author: nice
 Section: Tweaks
