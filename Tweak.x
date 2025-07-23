@@ -1,12 +1,42 @@
 #import <UIKit/UIKit.h>
 
+// Hook OIDIDToken to fake expiresAt
+%hook OIDIDToken
+
+- (void)setExpiresAt:(NSDate *)date {
+    NSLog(@"[HOOK] OIDIDToken::setExpiresAt: original=%@", date);
+    NSDate *farFuture = [NSDate dateWithTimeIntervalSince1970:4102444800]; // Year 2099
+    %orig(farFuture);
+}
+
+%end
+
+// Hook STRVWatchSetupCompleteViewController to force isPremium = YES
 %hook STRVWatchSetupCompleteViewController
 
-- (instancetype)initWithAnalyticsStore:(id)arg2 isPremium:(BOOL)arg3 factory:(id)arg4 {
-    NSLog(@"[HOOK] STRVWatchSetupCompleteViewController initWithAnalyticsStore:isPremium:factory: called. Force isPremium=YES");
-    
-    // 调用原方法，强制把 arg3 改为 YES
-    return %orig(arg2, YES, arg4);
+- (void)setIsPremium:(BOOL)value {
+    NSLog(@"[HOOK] STRVWatchSetupCompleteViewController::setIsPremium: original=%d", value);
+    %orig(YES);
+}
+
+%end
+
+// Hook CheckoutContainerViewModel to force recurring = YEARLY
+%hook CheckoutContainerViewModel
+
+- (NSString *)recurring {
+    NSLog(@"[HOOK] CheckoutContainerViewModel::recurring called");
+    return @"YEARLY";
+}
+
+%end
+
+// Optional: Hook sku if needed
+%hook BranchContentMetadata
+
+- (NSString *)sku {
+    NSLog(@"[HOOK] BranchContentMetadata::sku called");
+    return @"com.strava.ios.pricetest.subscription.yearly.control.version.2022.06.08";
 }
 
 %end
