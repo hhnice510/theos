@@ -1,5 +1,3 @@
-// 使用 %config 指令来指定 Tweak 的作用目标应用
-%config(filter, { Bundles = [ "com.pxmage.egoreader" ]; }) // 请将 "com.pxmage.egoreader" 替换为目标应用的 Bundle Identifier
 
 // 引入必要的头文件
 #import <Foundation/Foundation.h>
